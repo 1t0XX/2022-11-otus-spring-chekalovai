@@ -7,12 +7,18 @@
         <constructor-arg name="questionDao" ref="questionDao"/>
     </bean>
 
-    <bean id="questionDao" class="ru.otus.utils.CsvReader">
+    <bean id="questionDao" class="ru.otus.utils.QuestionDaoCsv">
         <constructor-arg name="fileName" type="java.lang.String" value="questions.csv"/>
+    </bean>
+
+    <bean id="ioService" class="ru.otus.service.IOStreamsService">
+        <constructor-arg name="out"  type="java.io.PrintStream" value="#{T(System).out}"/>
+        <constructor-arg name="in" type="java.io.InputStream" value="#{T(System).in}"/>
     </bean>
 
     <bean id="examiner" class="ru.otus.service.ExecutorService">
         <constructor-arg name="questionsService" ref="questionService"/>
+        <constructor-arg name="ioService" ref="ioService"/>
     </bean>
 
 </beans>

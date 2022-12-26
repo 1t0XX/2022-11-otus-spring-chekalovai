@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @ToString
-public class Question {
-    private String description;
-    private Answer answer;
+public class Answer {
+    private List <String> answers;
+    private String correctAnswer;
 }

@@ -4,23 +4,20 @@ import lombok.RequiredArgsConstructor;
 import ru.otus.domain.Question;
 
 import java.util.List;
-import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class ExecutorService implements Executor {
-
     private final QuestionsService questionsService;
+    private final IOStreamsService ioService;
 
     @Override
     public void run() {
-        Scanner sc = new Scanner(System.in);
         List<Question> questions = questionsService.getQuestions();
-        questions.forEach(question -> {
-            System.out.println(question.getDescription());
-            System.out.println("Choose one answer: ");
-            System.out.println(String.join(", ", question.getAnswer()));
-            String answer = sc.nextLine();
-            System.out.println(answer.contains(question.getCorrectAnswer()) ? "Correct answer" : "Not correct answer");
-        });
+        for (Question question : questions) {
+            ioService.out(question.getDescription() + "\n" + question.getAnswer().getAnswers().toString());
+            String answerUser = ioService.readString();
+            boolean correctAnswer = question.getAnswer().getCorrectAnswer().contains(answerUser);
+            ioService.out(correctAnswer ? "Correct answer" : "Not correct answer");
+        }
     }
 }
