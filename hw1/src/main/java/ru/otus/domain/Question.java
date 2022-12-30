@@ -1,15 +1,15 @@
 package ru.otus.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Question {
     private String description;
-    private Answer answer;
+    private List<Answer> answers;
 }

@@ -7,7 +7,7 @@
         <constructor-arg name="questionDao" ref="questionDao"/>
     </bean>
 
-    <bean id="questionDao" class="ru.otus.utils.QuestionDaoCsv">
+    <bean id="questionDao" class="ru.otus.dao.QuestionDaoCsv">
         <constructor-arg name="fileName" type="java.lang.String" value="questions.csv"/>
     </bean>
 
@@ -19,6 +19,11 @@
     <bean id="examiner" class="ru.otus.service.ExecutorService">
         <constructor-arg name="questionsService" ref="questionService"/>
         <constructor-arg name="ioService" ref="ioService"/>
+        <constructor-arg name="outputService" ref="outputService"/>
+    </bean>
+
+    <bean id="outputService" class="ru.otus.service.PrepareServiceImpl">
+    <constructor-arg name="ioService" ref="ioService"/>
     </bean>
 
 </beans>

@@ -1,23 +1,20 @@
 package ru.otus.service;
 
 import lombok.RequiredArgsConstructor;
-import ru.otus.domain.Question;
-
-import java.util.List;
+import ru.otus.domain.Answer;
 
 @RequiredArgsConstructor
 public class ExecutorService implements Executor {
     private final QuestionsService questionsService;
-    private final IOStreamsService ioService;
+    private final IOService ioService;
+    private final PrepareService outputService;
 
     @Override
     public void run() {
-        List<Question> questions = questionsService.getQuestions();
-        for (Question question : questions) {
-            ioService.out(question.getDescription() + "\n" + question.getAnswer().getAnswers().toString());
-            String answerUser = ioService.readString();
-            boolean correctAnswer = question.getAnswer().getCorrectAnswer().contains(answerUser);
-            ioService.out(correctAnswer ? "Correct answer" : "Not correct answer");
-        }
+        questionsService.getQuestions().forEach(question -> {
+            String answerUser = outputService.prepareOutput(question);
+            Answer answer = question.getAnswers().stream().filter(x -> x.getAnswer().contains(answerUser)).findFirst().orElse(null);
+            ioService.out(answer != null && answer.isCorrectAnswer() ? "Correct answer" : "Not correct answer");
+        });
     }
 }

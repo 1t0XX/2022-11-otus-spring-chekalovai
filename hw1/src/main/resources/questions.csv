@@ -1,5 +1,5 @@
-The capital of Great Britain?;Paris:Moscow:London:Minsk;London
-What we are studying?;spring:java:C++:C#;spring
-What class do all classes inherit from Java?;object:list:runtime:collection;object
-Select reference data type in Java?;byte:short:String:long;String
-2 * 2 = ?;4:3:2:5;4
+The capital of Great Britain?;Paris:false;Moscow:false;London:true;Minsk:false
+What we are studying?;spring:true;java:false;C++:false;C#:false
+What class do all classes inherit from Java?;object:true;list:false;runtime:false;collection:false
+Select reference data type in Java?;byte:false;short:false;String:true;long:false
+2 * 2 = ?;4:false;3:false;2:false;5:false
