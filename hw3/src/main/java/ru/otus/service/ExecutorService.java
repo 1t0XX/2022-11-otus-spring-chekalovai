@@ -17,19 +17,19 @@ public class ExecutorService implements Executor {
     private final ResultStudentService resultStudentService;
 
     private final СorrectAnswersPass correctAnswersPass;
-    private final LocalizationMessageService localizationMessageService;
+    private final OutputMessage outputMessage;
 
     @Override
     public void run() {
-        ioService.out(localizationMessageService.getLocalizedMessage("message.greetings"));
+        outputMessage.printConsoleMessageGreetings();
         User user = userService.getUser();
         Test test = new Test(user);
         questionsService.getQuestions().forEach(question -> {
             String answerUser = outputService.prepareOutput(question);
-            Answer answer = question.getAnswers().stream().filter(x -> x.getAnswer().contains(answerUser)).findFirst().orElse(null);
+            Answer answer = question.getAnswers().stream().filter(x -> x.getAnswer().equals(answerUser)).findFirst().orElse(null);
             boolean isCorrect = answer != null && answer.isCorrectAnswer();
             test.incAnswers(isCorrect);
-            ioService.out(localizationMessageService.getLocalizedMessage(isCorrect ? "message.answer.correct" : "message.answer.not_correct"));
+            outputMessage.printConsoleCorrectOrNotCorrectAnswer(isCorrect);
         });
         int correctAnswers = correctAnswersPass.getCorrectAnswersPass();
         ioService.out(resultStudentService.outResultInfoTest(test, correctAnswers));

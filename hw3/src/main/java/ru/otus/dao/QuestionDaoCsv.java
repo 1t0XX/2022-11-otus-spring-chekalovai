@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.springframework.stereotype.Component;
-import ru.otus.config.LocalizedCsvResourceName;
+import ru.otus.config.CsvResourceName;
 import ru.otus.domain.Answer;
 import ru.otus.domain.Question;
 
@@ -24,11 +24,11 @@ public class QuestionDaoCsv implements QuestionDao {
 
     private static final String CORRECT_ANSWER_DELIMITER = ":";
 
-    private final LocalizedCsvResourceName locateCsvResourceName;
+    private final CsvResourceName csvResourceName;
 
     @Override
     public List<Question> getQuestions() {
-        String csvResource = locateCsvResourceName.getLocalizedCsvResourceName();
+        String csvResource = csvResourceName.getCsvResourceName();
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(csvResource)), StandardCharsets.UTF_8))) {
             CSVParser csvParser = new CSVParser(fileReader, CSVFormat.newFormat(DELIMITER));
             List<Question> questions = new ArrayList<>();

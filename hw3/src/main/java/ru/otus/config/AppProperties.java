@@ -6,10 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Locale;
 
-@ConfigurationProperties(prefix = "app")
+@ConfigurationProperties(prefix = "app.properties")
 @Getter
 @Setter
-public class AppProperties implements LocaleProvider, LocalizedCsvResourceName, СorrectAnswersPass {
+public class AppProperties implements LocaleProvider, CsvResourceName, СorrectAnswersPass {
     private String csvResourceName;
     private int correctAnswersPass;
     private Locale locale;
@@ -20,8 +20,8 @@ public class AppProperties implements LocaleProvider, LocalizedCsvResourceName, 
     }
 
     @Override
-    public String getLocalizedCsvResourceName() {
-        return locale.toString() + "_" + csvResourceName;
+    public String getCsvResourceName() {
+        return csvResourceName;
     }
 
     @Override

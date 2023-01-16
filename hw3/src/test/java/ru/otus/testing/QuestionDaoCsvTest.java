@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.otus.config.LocalizedCsvResourceName;
+import ru.otus.config.CsvResourceName;
 import ru.otus.dao.QuestionDaoCsv;
 import ru.otus.domain.Answer;
 import ru.otus.domain.Question;
@@ -24,7 +24,7 @@ public class QuestionDaoCsvTest {
     private static final String CSV_RESOURCE_NAME = "questionsTest.csv";
 
     @Mock
-    private LocalizedCsvResourceName resourceName;
+    private CsvResourceName resourceName;
 
     @InjectMocks
     QuestionDaoCsv questionDaoCsv;
@@ -49,7 +49,7 @@ public class QuestionDaoCsvTest {
                 new Answer("answer8", false),
                 new Answer("answer9", false)
         )));
-        given(resourceName.getLocalizedCsvResourceName()).willReturn(CSV_RESOURCE_NAME);
+        given(resourceName.getCsvResourceName()).willReturn(CSV_RESOURCE_NAME);
        assertThat(questionDaoCsv.getQuestions()).usingRecursiveFieldByFieldElementComparator().containsExactlyElementsOf(questions);
     }
 }

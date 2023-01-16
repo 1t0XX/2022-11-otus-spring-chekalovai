@@ -4,6 +4,7 @@ spring:
     encoding: "UTF-8"
 
 app:
-    csv-resource-name: "questions.csv"
-    correct-answers-pass: 4
-    locale: de
+    properties:
+      csv-resource-name: ${app.properties.locale}_questions.csv
+      correct-answers-pass: 4
+      locale: en
