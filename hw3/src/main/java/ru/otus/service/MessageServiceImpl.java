@@ -7,14 +7,15 @@ import ru.otus.config.LocaleProvider;
 
 @Service
 @RequiredArgsConstructor
-public class LocalizationMessageServiceImpl implements LocalizationMessageService {
+public class MessageServiceImpl implements MessageService {
 
     private final LocaleProvider localeProvider;
 
     private final MessageSource messageSource;
 
     @Override
-    public String getLocalizedMessage(String code) {
+    public String getMessage(String code) {
         return messageSource.getMessage(code, new String[0], localeProvider.getLocale());
     }
+
 }

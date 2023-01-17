@@ -10,12 +10,12 @@ public class UserServiceImpl implements UserService {
 
     private final IOService ioService;
 
-    private final LocalizationMessageService localizationMessageService;
+    private final MessageService messageService;
 
     @Override
     public User getUser() {
-        String name = ioService.readLine(localizationMessageService.getLocalizedMessage("message.name"));
-        String surName = ioService.readLine(localizationMessageService.getLocalizedMessage("message.surname"));
+        String name = ioService.readLine(messageService.getMessage("message.name"));
+        String surName = ioService.readLine(messageService.getMessage("message.surname"));
         return new User(name, surName);
     }
 }

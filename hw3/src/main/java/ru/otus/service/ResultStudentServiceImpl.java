@@ -8,18 +8,18 @@ import ru.otus.domain.Test;
 @RequiredArgsConstructor
 public class ResultStudentServiceImpl implements ResultStudentService {
 
-    private final LocalizationMessageService localizationMessageService;
+    private final MessageService messageService;
 
     @Override
     public String outResultInfoTest(Test test, int correctAnswers) {
         String student = test.getUserNameAndSurname();
         var rightAnswers = test.getCorrectAnswers();
         var total = test.getTotalAnswers();
-        return String.format(localizationMessageService.getLocalizedMessage("test.result.pattern"), student, total,
+        return String.format(messageService.getMessage("test.result.pattern"), student, total,
                 rightAnswers, correctAnswers, determineTestResult(rightAnswers, correctAnswers));
     }
 
     private String determineTestResult(int rightAnswers, int correctAnswers) {
-        return localizationMessageService.getLocalizedMessage(rightAnswers >= correctAnswers ? "message.test.passed" : "message.test.failed");
+        return messageService.getMessage(rightAnswers >= correctAnswers ? "message.test.passed" : "message.test.failed");
     }
 }
