@@ -1,0 +1,17 @@
+spring:
+  messages:
+    basename: "appmessages"
+    encoding: "UTF-8"
+
+  main:
+    allow-circular-references: true
+
+app:
+    properties:
+      csv-resource-name: ${app.properties.locale}_questions.csv
+      correct-answers-pass: 4
+      locale: en
+
+logging:
+  level:
+    root: ERROR
