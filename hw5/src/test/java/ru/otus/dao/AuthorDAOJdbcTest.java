@@ -1,9 +1,10 @@
 package ru.otus.dao;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import ru.otus.domain.Author;
@@ -13,7 +14,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SpringBootTest
+@DisplayName("Tests for AuthorDAOJdbc")
+@JdbcTest
 @Import({AuthorDAOJdbc.class})
 public class AuthorDAOJdbcTest {
 
@@ -38,9 +40,9 @@ public class AuthorDAOJdbcTest {
     @Test
     void save_newAuthorSaved() {
         Author author = new Author(null, "Test", "Testovich");
-        Assertions.assertThat(authorDAOJdbc.getAll().stream().noneMatch(b -> b.getName().equals("Иван") && b.getSurName().equals("Иванов"))).isTrue();
+        Assertions.assertThat(authorDAOJdbc.getAll().stream().noneMatch(b -> b.getName().equals("Test") && b.getSurName().equals("Testovich"))).isTrue();
         authorDAOJdbc.save(author);
-        Assertions.assertThat(authorDAOJdbc.getAll().stream().anyMatch(b -> b.getName().equals("Иван") && b.getSurName().equals("Иванов"))).isTrue();
+        Assertions.assertThat(authorDAOJdbc.getAll().stream().anyMatch(b -> b.getName().equals("Test") && b.getSurName().equals("Testovich"))).isTrue();
 
     }
     @Test

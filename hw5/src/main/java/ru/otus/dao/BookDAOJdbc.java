@@ -29,9 +29,9 @@ public class BookDAOJdbc implements BookDAO {
     public List<Book> getAll() {
         return jdbc.query(
                 "select b.id, b.name, b.author_id, b.genre_id, a.name author_name, a.surname author_surname, g.name genre_name " +
-                        "from t_book b, t_author a, t_genre g " +
-                        "where b.genre_id = g.id and b.author_id = a.id" +
-                        " order by b.id",
+                        "from t_book b " +
+                        "INNER JOIN t_author a ON a.id = b.author_id " +
+                        "INNER JOIN t_genre g ON g.id = b.genre_id",
                 new MapperBook()
         );
     }
@@ -40,8 +40,10 @@ public class BookDAOJdbc implements BookDAO {
     public Book getById(Long id) {
         return jdbc.queryForObject(
                 "select b.id, b.name, b.author_id, b.genre_id, a.name author_name, a.surname author_surname, g.name genre_name " +
-                        "from t_book b, t_author a, t_genre g " +
-                        "where b.genre_id = g.id and b.author_id = a.id and b.id = :id",
+                        "from t_book b " +
+                        "INNER JOIN t_author a ON a.id = b.author_id " +
+                        "INNER JOIN t_genre g ON g.id = b.genre_id " +
+                        "where b.id = :id",
                 Map.of("id", id),
                 new MapperBook()
         );
@@ -59,8 +61,9 @@ public class BookDAOJdbc implements BookDAO {
         Author author = authorDao.getById(id);
         return jdbc.query(
                 "select b.id, b.name, g.id genre_id, g.name genre_name " +
-                        "from t_book b, t_genre g " +
-                        "where g.id = b.genre_id and b.author_id = :id",
+                        "from t_book b " +
+                        "INNER JOIN t_genre g ON g.id = b.genre_id " +
+                        "where b.author_id = :id",
                 Map.of("id", id),
                 new MapperBookByAuthor(author)
         );

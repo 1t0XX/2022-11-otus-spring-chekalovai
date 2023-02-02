@@ -1,5 +1,6 @@
 package ru.otus.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
+@DisplayName("Tests for ServiceBook")
 @SpringBootTest(classes = {BookServiceImpl.class})
 public class ServiceBookTest {
 
