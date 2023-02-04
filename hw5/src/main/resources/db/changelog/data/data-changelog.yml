@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: "data: insert_authors-01"
+      author: chekalovai
+      changes:
+        - sqlFile:
+            endDelimiter: ;
+            splitStatements: true
+            path: classpath:/db/changelog/data/insert_authors.sql
+  - changeSet:
+      id: "data: insert_genres-01"
+      author: chekalovai
+      changes:
+        - sqlFile:
+            endDelimiter: ;
+            splitStatements: true
+            path: classpath:/db/changelog/data/insert_genres.sql
+  - changeSet:
+      id: "data: insert_books-01"
+      author: chekalovai
+      changes:
+        - sqlFile:
+            endDelimiter: ;
+            splitStatements: true
+            path: classpath:/db/changelog/data/insert_books.sql
