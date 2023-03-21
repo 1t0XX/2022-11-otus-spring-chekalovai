@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id:  "2023-03-21--0001--chekalovai"
+      author:  chekalovai
+      changes:
+      -  createTable:
+          tableName:  t_book
+          columns:
+          -  column:
+              name:  id
+              type:  BIGINT
+              autoIncrement: true
+              constraints:
+                 primaryKey: true
+          -  column:
+              name:  name
+              type:  varchar(255)
+              constraints:
+                nullable: false
+          -  column:
+              name:  author_id
+              type:  BIGINT
+              constraints:
+                nullable: false
+          -  column:
+              name:  genre_id
+              type:  BIGINT
+              constraints:
+                nullable: false
+
+      -  addForeignKeyConstraint:
+                baseColumnNames:  genre_id
+                baseTableName:  t_book
+                constraintName:  fk_book_genre_id
+                onDelete:  CASCADE
+                onUpdate:  CASCADE
+                referencedColumnNames:  id
+                referencedTableName:  t_genre
+
+      -  addForeignKeyConstraint:
+                baseColumnNames:  author_id
+                baseTableName:  t_book
+                constraintName:  fk_book_author_id
+                onDelete:  CASCADE
+                onUpdate:  CASCADE
+                referencedColumnNames:  id
+                referencedTableName:  t_author
+
+      - createIndex:
+                columns:
+                 - column:
+                    name:  author_id
+                indexName:  indx_book_author_id
+                tableName:  t_book
+      - createIndex:
+                columns:
+                 - column:
+                    name:  genre_id
+                indexName:  indx_book_genre_id
+                tableName:  t_book
