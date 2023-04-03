@@ -19,7 +19,7 @@ import static ru.otus.entity.Book.BOOK_AUTHOR_GENRE_GRAPH;
 public class BookRepositoryJpa implements BookRepository {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Override
     public List<Book> getAll() {

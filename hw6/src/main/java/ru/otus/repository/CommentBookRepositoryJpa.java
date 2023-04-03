@@ -15,7 +15,7 @@ import java.util.Optional;
 public class CommentBookRepositoryJpa implements CommentBookRepository {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Override
     public List<CommentBook> findAllByBookId(Long id) {

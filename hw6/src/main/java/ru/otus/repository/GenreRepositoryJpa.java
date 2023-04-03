@@ -14,7 +14,7 @@ import java.util.Optional;
 public class GenreRepositoryJpa implements GenreRepository {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Override
     public List<Genre> getAll() {

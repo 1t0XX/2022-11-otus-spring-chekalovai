@@ -19,9 +19,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
-@DisplayName("Tests for ServiceBook")
+@DisplayName("Tests for BookService")
 @SpringBootTest(classes = {BookServiceImpl.class})
-public class ServiceBookTest {
+public class BookServiceTest {
 
     @Autowired
     private BookServiceImpl bookService;

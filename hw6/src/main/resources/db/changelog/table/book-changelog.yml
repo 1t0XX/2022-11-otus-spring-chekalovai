@@ -32,7 +32,6 @@ databaseChangeLog:
                 baseColumnNames:  genre_id
                 baseTableName:  t_book
                 constraintName:  fk_book_genre_id
-                onDelete:  CASCADE
                 onUpdate:  CASCADE
                 referencedColumnNames:  id
                 referencedTableName:  t_genre
@@ -41,7 +40,6 @@ databaseChangeLog:
                 baseColumnNames:  author_id
                 baseTableName:  t_book
                 constraintName:  fk_book_author_id
-                onDelete:  CASCADE
                 onUpdate:  CASCADE
                 referencedColumnNames:  id
                 referencedTableName:  t_author
