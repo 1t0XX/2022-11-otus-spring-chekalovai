@@ -43,16 +43,16 @@ public class Book {
 
         Book book = (Book) o;
 
-        return new EqualsBuilder().append(id, book.id).append(name, book.name).append(author, book.author).append(genre, book.genre).isEquals();
+        return new EqualsBuilder().append(id, book.id).append(name, book.name).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(name).append(author).append(genre).toHashCode();
+        return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Book{" + "id=" + id + ", name='" + name + '\'' + ", author=" + author + ", genre=" + genre + '}';
+        return "Book{" + "id=" + id + ", name='" + name + '}';
     }
 }

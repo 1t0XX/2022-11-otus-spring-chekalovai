@@ -47,12 +47,12 @@ public class CommentBook {
 
         CommentBook that = (CommentBook) o;
 
-        return new EqualsBuilder().append(id, that.id).append(comment, that.comment).append(book, that.book).isEquals();
+        return new EqualsBuilder().append(id, that.id).append(comment, that.comment).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(comment).append(book).toHashCode();
+        return new HashCodeBuilder(17, 37).append(id).append(comment).toHashCode();
     }
 
     @Override
