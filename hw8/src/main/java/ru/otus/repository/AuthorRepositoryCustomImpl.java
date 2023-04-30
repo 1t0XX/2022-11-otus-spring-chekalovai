@@ -10,6 +10,9 @@ import ru.otus.model.Author;
 import ru.otus.model.Book;
 import ru.otus.model.CommentBook;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
 
@@ -27,10 +30,11 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
     public void deleteByIdCustom(String id) {
         var aggregation = Aggregation.newAggregation(match(Criteria.where("author.id").is(id)),
                 project("id").and("id").as("bookId"));
-        mongoTemplate.aggregate(aggregation, Book.class, BookId.class)
-                .getMappedResults().forEach(
-                        bookId -> mongoTemplate.remove(
-                                Query.query(Criteria.where("book.id").is(bookId.getBookId())), CommentBook.class));
+
+        List<String> booksIds = mongoTemplate.aggregate(aggregation, Book.class, BookId.class).getMappedResults()
+                .stream().map(BookId::getBookId).collect(Collectors.toList());
+
+        mongoTemplate.remove(Query.query(Criteria.where("book.id").in(booksIds)), CommentBook.class);
         mongoTemplate.remove(Query.query(Criteria.where("author.id").is(id)), Book.class);
         mongoTemplate.remove(Query.query(Criteria.where("id").is(id)), Author.class);
     }

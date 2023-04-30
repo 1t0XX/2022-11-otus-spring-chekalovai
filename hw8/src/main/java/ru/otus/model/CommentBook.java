@@ -18,7 +18,6 @@ public class CommentBook {
     private String id;
     @Field(name = "comment")
     private String comment;
-    @DBRef
     @Field(name = "book")
     private Book book;
 

@@ -9,6 +9,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import ru.otus.model.Author;
+import ru.otus.model.Book;
+import ru.otus.model.CommentBook;
+
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,35 +29,53 @@ class AuthorRepositoryTest {
 
     @Test
     void getById_FindAuthorById() {
-        Query query = Query.query(Criteria.where("id").is("1"));
-        var author = mongoTemplate.find(query, Author.class);
+        var author = mongoTemplate.findById("1", Author.class);
         var authorFromRepo = authorRepository.findById("1");
-        assertThat(authorFromRepo).isPresent().get().usingRecursiveComparison().isEqualTo(author.get(0));
+        assertThat(authorFromRepo).isPresent().get().usingRecursiveComparison().isEqualTo(author);
     }
 
     @Test
     void save_newAuthor() {
         var author = new Author("123", "Тест", "Тест");
-        var saveAuthor = authorRepository.save(author);
+        var author4Save = authorRepository.save(author);
 
-        assertThat(saveAuthor.getId()).isNotNull();
+        assertThat(author4Save.getId()).isNotNull();
 
-        Query query = Query.query(Criteria.where("id").is(saveAuthor.getId()));
-        var searchAuthor = mongoTemplate.find(query, Author.class);
-        assertThat(searchAuthor.get(0)).isNotNull().matches(a -> a.getName().equals(author.getName()))
+        Query query = Query.query(Criteria.where("id").is(author4Save.getId()));
+        var author4Find = mongoTemplate.find(query, Author.class);
+        assertThat(author4Find.get(0)).isNotNull().matches(a -> a.getName().equals(author.getName()))
                 .matches(a -> a.getSurName().equals(author.getSurName()));
 
     }
 
     @Test
     void delete_author() {
-        var author = new Author("123", "Тест", "Тест");
-        var saveAuthor = authorRepository.save(author);
+        var author = mongoTemplate.findById("1", Author.class);
+        var book = mongoTemplate.find(
+                Query.query(Criteria.where("author").is(author)), Book.class);
 
-        Query query = Query.query(Criteria.where("id").is(saveAuthor.getId()));
-        var author2Del = mongoTemplate.find(query, Author.class);
-        assertThat(author2Del).hasSize(1);
-        authorRepository.deleteByIdCustom(author2Del.get(0).getId());
-        assertThat(mongoTemplate.find(query, Author.class)).isEmpty();
+        var commentBook = mongoTemplate.find(
+                Query.query(Criteria.where("book").in(book)), CommentBook.class);
+
+        assertThat(book).isNotNull().hasSize(3);
+        assertThat(commentBook).isNotNull().hasSize(7);
+
+        authorRepository.deleteByIdCustom("1");
+
+        var commentsBookIds = commentBook.stream().map(CommentBook::getId).collect(Collectors.toList());
+        var booksIds = book.stream().map(Book::getId).collect(Collectors.toList());
+
+        var commentsAlreadyDel = mongoTemplate.find(
+                Query.query(Criteria.where("id").in(commentsBookIds)), CommentBook.class);
+
+        var booksAlreadyDel = mongoTemplate.find(
+                Query.query(Criteria.where("id").in(booksIds)), Book.class);
+
+        var authorAlreadyDel = mongoTemplate.findById("1", Author.class);
+
+        assertThat(commentsAlreadyDel).isNotNull().hasSize(0);
+        assertThat(booksAlreadyDel).isNotNull().hasSize(0);
+        assertThat(authorAlreadyDel).isNull();
+
     }
 }
