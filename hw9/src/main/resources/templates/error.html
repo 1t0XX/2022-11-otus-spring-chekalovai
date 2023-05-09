@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error page</title>
+    <meta charset="utf-8"/>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body >
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container" id="main">
+    <form id="error-form" >
+        <div class="card text-bg-danger mb-3 mb-auto" >
+            <div class="card-header" th:text="#{form.error.handled.title}">Header</div>
+            <div class="card-body">
+                <h5 class="col-sm-8" th:text="${errorMessage}">Danger card title</h5>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+
+    <meta charset="UTF-8">
+    <title th:text="#{form.header.title}" >Awesome library</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md sticky-top" style="background-color: #e3f2fd;" th:fragment="header">
+    <a th:href="@{/}"><img th:src="@{img/logo.png}" width="50px" th:alt="#{form.header.title}"></a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+            <li class="nav-item">
+                <a class="nav-link" th:text="#{form.header.item.books}" th:href="@{/book}">Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:text="#{form.header.item.authors}" th:href="@{/author}">Authors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:text="#{form.header.item.genres}" th:href="@{/genre}">Genres</a>
+            </li>
+        </ul>
+    </div>
+    <form class="d-flex me-3">
+            <a href="#" th:href="@{''(lang=en)}">EN</a>
+            <a> / </a>
+            <a href="#" th:href="@{''(lang=ru)}">RU</a>
+    </form>
+</nav>
+
+</body>
+</html>

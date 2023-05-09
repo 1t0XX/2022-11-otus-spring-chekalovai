@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{form.book.list.title}">Title</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container" id="main">
+
+    <div class="table-container" id="main-book-table">
+
+        <div class="card">
+            <div class="card-body">
+                <h3 th:text="#{form.book.list.list}">#{form.book.list.list}</h3>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+            <tr>
+                <th th:text="#{form.book.list.column.id}"></th>
+                <th th:text="#{form.book.list.column.name}"></th>
+                <th th:text="#{form.book.list.column.author}"></th>
+                <th th:text="#{form.book.list.column.genre}"></th>
+                <th th:text="#{form.book.list.column.action}"></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="book : ${books}">
+
+                <td th:text="${book.id}">1</td>
+                <td th:text="${book.name}">BOOK</td>
+                <td th:text="${@formatter.authorFormat(book.author)}">AUTHOR</td>
+                <td th:text="${book.genre.name}">GENRE</td>
+                <td>
+                    <form th:action="@{/book/__${book.id}__}" th:method="delete">
+                        <a href="book-edit.html" th:href="@{/book/__${book.id}__/(readOnly=false)}">
+                            <button type="button" class="btn btn-outline-success"
+                                    th:text="#{form.book.list.column.action.edit}"></button>
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger"
+                                th:text="#{form.book.list.column.action.remove}"></button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="form-edit-group-row">
+                        <a href="book-edit.html" th:href="@{/book/0/(readOnly=false)}">
+                            <button type="button" class="btn btn-primary"
+                                    th:text="#{form.book.list.new}"></button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
