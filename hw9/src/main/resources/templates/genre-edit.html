@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{form.genre.edit.title}" th:object="${genre}">genre title</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container" id="main">
+    <form id="genre-edit-form" action="genre-edit.html" th:method="post" th:object="${genre}" th:action="@{/genre}">
+
+        <div class="card mb-auto">
+            <div class="card card-body" id="editForm">
+                <h3 th:text="${genre.id} ? #{form.genre.edit.info.edit} : #{form.genre.edit.info.new}">genre info</h3>
+
+                <div class="form-edit-group-row mb-3" th:if="${genre.id > 0}">
+                    <label for="id-input" th:text="#{form.genre.edit.id}" class="col-sm-4">ID</label>
+                    <input class="form-control col-sm-8" id="id-input" name="id" readonly="readonly" value="1"
+                           th:value="*{id}" type="text"/>
+                </div>
+
+                <div class="form-edit-group-row mb-3">
+                    <label for="genre-name-input" th:text="#{form.genre.edit.name}" class="col-sm-4">Name</label>
+                    <input class="form-control col-sm-8" id="genre-name-input" th:readonly="${readOnly}" name="name"
+                           value="noname" type="text" th:value="*{name}"/>
+                    <div class="errors text-bg-danger p-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Wrong genre name error</div>
+                </div>
+
+                <div class="form-edit-group-row mb-3">
+                    <button th:unless="${readOnly}" class="btn btn-primary" type="submit"
+                            th:text="#{form.genre.edit.button.save.title}">Save
+                    </button>
+                    <a href="genre-list.html" th:href="@{/genre}">
+                        <button class="btn btn-secondary" type="button"
+                                th:text="#{form.genre.edit.button.cancel.title}">Cancel
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

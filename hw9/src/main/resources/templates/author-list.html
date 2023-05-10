@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{form.author.list.title}">Title</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container" id="main">
+
+    <div class="table-container" id="main-author-table">
+
+        <div class="card" >
+            <div class="card-body">
+                <h3 th:text="#{form.author.list.list}">#{form.author.list.list}</h3>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+            <tr>
+                <th th:text="#{form.author.list.column.id}"></th>
+                <th th:text="#{form.author.list.column.name}"></th>
+                <th th:text="#{form.author.list.column.lastname}"></th>
+                <th th:text="#{form.author.list.column.action}"></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="author : ${authors}">
+
+                <td th:text="${author.id}">1</td>
+                <td th:text="${author.name}">NAME</td>
+                <td th:text="${author.surName}">LASTNAME</td>
+                <td>
+                    <form th:action="@{/author/__${author.id}__}" th:method="delete">
+                        <a href="author-edit.html" th:href="@{/author/__${author.id}__/(readOnly=false)}">
+                            <button type="button" class="btn btn-outline-success"
+                                    th:text="#{form.author.list.column.action.edit}"></button>
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger"
+                                th:text="#{form.author.list.column.action.remove}"></button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="form-edit-group-row">
+                        <a href="author-edit.html" th:href="@{/author/0/(readOnly=false)}">
+                            <button type="button" class="btn btn-primary"
+                                    th:text="#{form.author.list.new}"></button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
