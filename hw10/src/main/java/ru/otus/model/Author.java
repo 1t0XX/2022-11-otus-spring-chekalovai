@@ -25,13 +25,21 @@ public class Author {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Author author = (Author) o;
 
-        if (!id.equals(author.id)) return false;
-        if (!name.equals(author.name)) return false;
+        if (!id.equals(author.id)) {
+            return false;
+        }
+        if (!name.equals(author.name)) {
+            return false;
+        }
         return surName.equals(author.surName);
     }
 

@@ -93,7 +93,6 @@ class BookEdit extends Component<ComponentProps, ComponentState> {
     const book = this.state.book
 
     BookService.save(book).then((data) => this.setState({ book: data }))
-    // this.props.history.push('/book')
     this.props.navigate('/book')
   }
 

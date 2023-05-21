@@ -19,7 +19,7 @@ class AuthorEdit extends Component<ComponentProps, ComponentState> {
   emptyAuthor = {
     id: '',
     name: '',
-    lastName: '',
+    surName: '',
   }
 
   constructor(props: ComponentProps) {
@@ -53,10 +53,6 @@ class AuthorEdit extends Component<ComponentProps, ComponentState> {
     const author = this.state.author
     AuthorService.save(author).then((data) => this.setState({ author: data }))
     this.props.navigate('/author')
-  }
-
-  authorFormat(author: Author) {
-    return author.name + ' ' + author.surName
   }
 
   render() {
@@ -93,7 +89,7 @@ class AuthorEdit extends Component<ComponentProps, ComponentState> {
                 <Form.Label>Фамилия</Form.Label>
                 <Form.Control
                   type="text"
-                  name="lastName"
+                  name="surName"
                   value={author.surName}
                   onChange={this.handleChange}
                 />

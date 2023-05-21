@@ -35,12 +35,18 @@ public class CommentBook {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         CommentBook that = (CommentBook) o;
 
-        if (!id.equals(that.id)) return false;
+        if (!id.equals(that.id)) {
+            return false;
+        }
         return comment.equals(that.comment);
     }
 
