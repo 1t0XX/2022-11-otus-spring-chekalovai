@@ -73,7 +73,6 @@ class BookEdit extends Component<ComponentProps, ComponentState> {
     const name = target.name
     let selectedGenre = [...this.state.genres].filter((i) => i.id == value)[0]
     let book = { ...this.state.book }
-    // TODO: fix
     book[name] = selectedGenre
     this.setState({ book })
   }
@@ -84,7 +83,6 @@ class BookEdit extends Component<ComponentProps, ComponentState> {
     const name = target.name
     let selectedAuthor = [...this.state.authors].filter((i) => i.id == value)[0]
     let book = { ...this.state.book }
-    // TODO: fix
     book[name] = selectedAuthor
     this.setState({ book })
   }
