@@ -15,8 +15,6 @@
     <description>hw10</description>
     <properties>
         <java.version>11</java.version>
-        <bootstrap.version>5.2.0</bootstrap.version>
-        <webjars-locator.version>0.42</webjars-locator.version>
     </properties>
     <dependencies>
         <dependency>
@@ -46,17 +44,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>${bootstrap.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>${webjars-locator.version}</version>
         </dependency>
     </dependencies>
 
