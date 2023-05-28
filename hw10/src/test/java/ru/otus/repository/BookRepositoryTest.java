@@ -38,8 +38,8 @@ class BookRepositoryTest {
 
     @Test
     void save_fullSetBook() {
-        Genre genre = new Genre(null, "Стих");
-        Author author = new Author(null, "Михаил", "Лермонтов");
+        Genre genre = new Genre(1L, "Стих");
+        Author author = new Author(1L, "Михаил", "Лермонтов");
         Book book = new Book(null, "Мцыри", author, genre);
 
         var savedBook = bookRepository.save(book);
