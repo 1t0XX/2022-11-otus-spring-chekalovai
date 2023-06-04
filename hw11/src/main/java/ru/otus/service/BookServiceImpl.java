@@ -41,10 +41,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Mono<Book> saveBook(Book book) {
+        if (book.getId().equals("")) {
+            book.setId(null);
+        }
         Mono<Author> authorMono = authorRepository.findById(book.getAuthor().getId());
         Mono<Genre> genreMono = genreRepository.findById(book.getGenre().getId());
         return Mono.zip(authorMono, genreMono)
-                .flatMap(tuple -> bookRepository.save(Book.builder().author(tuple.getT1()).genre(tuple.getT2()).build()))
+                .flatMap(tuple -> bookRepository.save(Book.builder().id(book.getId()).name(book.getName()).author(tuple.getT1()).genre(tuple.getT2()).build()))
                 .onErrorMap(error -> new SaveBookException(book, error));
     }
 

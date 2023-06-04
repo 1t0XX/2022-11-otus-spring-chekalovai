@@ -9,6 +9,7 @@ import ru.otus.exception.FindAllGenreException;
 import ru.otus.exception.GetGenreByIdException;
 import ru.otus.exception.SaveGenreException;
 import ru.otus.model.Genre;
+import ru.otus.repository.BookRepository;
 import ru.otus.repository.GenreRepository;
 
 
@@ -17,6 +18,8 @@ import ru.otus.repository.GenreRepository;
 public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository genreRepository;
+
+    private final BookRepository bookRepository;
 
 
     @Override
@@ -33,6 +36,9 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Mono<Genre> saveGenre(Genre genre) {
+        if (genre.getId().equals("")) {
+            genre.setId(null);
+        }
         return genreRepository.save(genre).onErrorMap(error -> new SaveGenreException(genre, error));
 
     }
@@ -40,6 +46,6 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Mono<Void> deleteGenre(String id) {
-           return genreRepository.deleteById(id).onErrorMap(error -> new DeleteGenreException(id, error));
+           return genreRepository.deleteById(id).and(bookRepository.deleteBooksByGenreId(id)).onErrorMap(error -> new DeleteGenreException(id, error));
     }
 }

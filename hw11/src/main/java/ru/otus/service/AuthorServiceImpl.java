@@ -10,6 +10,7 @@ import ru.otus.exception.GetAuthorByIdException;
 import ru.otus.exception.SaveAuthorException;
 import ru.otus.model.Author;
 import ru.otus.repository.AuthorRepository;
+import ru.otus.repository.BookRepository;
 
 
 @Service
@@ -17,6 +18,7 @@ import ru.otus.repository.AuthorRepository;
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
 
 
     @Override
@@ -33,13 +35,21 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Mono<Author> saveAuthor(Author author) {
-        return authorRepository.save(author).onErrorMap(error -> new SaveAuthorException(author, error));
+        if (author.getId().equals("")) {
+            author.setId(null);
+        } else {
+            Flux.from(bookRepository.findBooksByAuthorId(author.getId()).flatMap(book -> {
+                book.setAuthor(author);
+                return bookRepository.save(book);
+            })).subscribe();
+        }
 
+        return authorRepository.save(author).onErrorMap(error -> new SaveAuthorException(author, error));
     }
 
 
     @Override
     public Mono<Void> deleteAuthor(String id) {
-        return authorRepository.deleteById(id).onErrorMap(error -> new DeleteAuthorException(id, error));
+        return authorRepository.deleteById(id).and(bookRepository.deleteBooksByAuthorId(id)).onErrorMap(error -> new DeleteAuthorException(id, error));
     }
 }
