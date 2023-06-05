@@ -24,7 +24,7 @@ public class AuthorController {
     }
 
     @PostMapping(path = "/api/author")
-    public Mono<Author> saveAuthor(@RequestBody Author author) {
+    public Mono<Void> saveAuthor(@RequestBody Author author) {
         return authorService.saveAuthor(author);
     }
 

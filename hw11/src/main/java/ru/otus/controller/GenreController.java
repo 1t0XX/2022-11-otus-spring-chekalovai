@@ -25,7 +25,7 @@ public class GenreController {
     }
 
     @PostMapping(path = "/api/genre")
-    public Mono<Genre> saveGenre(@RequestBody Genre genre) {
+    public Mono<Void> saveGenre(@RequestBody Genre genre) {
         return genreService.saveGenre(genre);
     }
 

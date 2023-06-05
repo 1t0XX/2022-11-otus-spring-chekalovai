@@ -11,7 +11,7 @@ public interface GenreService {
 
     Mono<Genre> getGenreById(String id);
 
-    Mono<Genre> saveGenre(Genre genre);
+    Mono<Void> saveGenre(Genre genre);
 
     Mono<Void> deleteGenre(String id);
 }

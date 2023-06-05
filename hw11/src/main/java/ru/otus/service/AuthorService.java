@@ -11,7 +11,7 @@ public interface AuthorService {
 
     Mono<Author> getAuthorById(String id);
 
-    Mono<Author> saveAuthor(Author author);
+    Mono<Void> saveAuthor(Author author);
 
     Mono<Void> deleteAuthor(String id);
 }

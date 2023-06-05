@@ -15,6 +15,8 @@ import ru.otus.repository.AuthorRepository;
 import ru.otus.repository.BookRepository;
 import ru.otus.repository.GenreRepository;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +44,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Mono<Book> saveBook(Book book) {
         if (book.getId().equals("")) {
-            book.setId(null);
+            book.setId(UUID.randomUUID().toString());
         }
         Mono<Author> authorMono = authorRepository.findById(book.getAuthor().getId());
         Mono<Genre> genreMono = genreRepository.findById(book.getGenre().getId());

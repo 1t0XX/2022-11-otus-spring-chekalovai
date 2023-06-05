@@ -12,6 +12,8 @@ import ru.otus.model.Genre;
 import ru.otus.repository.BookRepository;
 import ru.otus.repository.GenreRepository;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -35,11 +37,11 @@ public class GenreServiceImpl implements GenreService {
 
 
     @Override
-    public Mono<Genre> saveGenre(Genre genre) {
+    public Mono<Void> saveGenre(Genre genre) {
         if (genre.getId().equals("")) {
-            genre.setId(null);
+            genre.setId(UUID.randomUUID().toString());
         }
-        return genreRepository.save(genre).onErrorMap(error -> new SaveGenreException(genre, error));
+        return genreRepository.save(genre).then(bookRepository.updateAllByGenreId(genre.getId(), genre)).onErrorMap(error -> new SaveGenreException(genre, error));
 
     }
 
