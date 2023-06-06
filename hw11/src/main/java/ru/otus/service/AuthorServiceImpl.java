@@ -1,6 +1,7 @@
 package ru.otus.service;
 
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -12,7 +13,6 @@ import ru.otus.model.Author;
 import ru.otus.repository.AuthorRepository;
 import ru.otus.repository.BookRepository;
 
-import java.util.UUID;
 
 
 @Service
@@ -38,7 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Mono<Void> saveAuthor(Author author) {
         if (author.getId().equals("")) {
-            author.setId(UUID.randomUUID().toString());
+            author.setId(new ObjectId().toString());
         }
 
         return authorRepository.save(author).then(bookRepository.updateAllByAuthorId(author.getId(), author))
