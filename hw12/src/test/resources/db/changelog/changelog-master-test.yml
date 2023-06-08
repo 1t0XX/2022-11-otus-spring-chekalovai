@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - include:
+      file: table/genre-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: table/author-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: table/book-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: table/comment-book-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: table/user-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: data-test/data-test-changelog.yml
+      relativeToChangelogFile: true
