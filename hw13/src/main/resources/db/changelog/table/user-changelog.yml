@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id:  "2023-06-03--0001--chekalovai"
+      author:  chekalovai
+      changes:
+      -  createTable:
+          tableName:  t_user
+          columns:
+          -  column:
+              name:  id
+              type:  BIGINT
+              autoIncrement: true
+              constraints:
+                 primaryKey: true
+          -  column:
+              name:  username
+              type:  varchar(255)
+              constraints:
+                nullable: false
+          -  column:
+              name:  password
+              type:  varchar(255)
+              constraints:
+                nullable: false
