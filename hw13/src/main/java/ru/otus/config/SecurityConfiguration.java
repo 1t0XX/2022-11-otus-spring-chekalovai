@@ -21,8 +21,8 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/login").permitAll()
-                        .antMatchers(HttpMethod.POST, "/api/author", "/api/genre", "/api/book").hasRole("MANAGER")
-                        .antMatchers(HttpMethod.DELETE, "/api/author/**", "/api/genre/**", "/api/book/**").hasRole("MANAGER")
+                        .antMatchers(HttpMethod.POST, "/api/author", "/api/genre", "/api/book").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/api/author/**", "/api/genre/**", "/api/book/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin()

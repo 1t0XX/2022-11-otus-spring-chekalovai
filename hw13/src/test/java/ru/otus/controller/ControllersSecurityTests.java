@@ -1,6 +1,7 @@
 package ru.otus.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -17,12 +19,16 @@ import ru.otus.model.Author;
 import ru.otus.model.Book;
 import ru.otus.model.Genre;
 import ru.otus.service.BookService;
-import ru.otus.service.GenreService;
 
 
+import java.util.List;
 import java.util.stream.Stream;
 
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -55,7 +61,7 @@ public class ControllersSecurityTests {
                 .andExpect(unauthenticated());
     }
 
-    @WithMockUser(username = "admin", roles = {"MANAGER"})
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     @ParameterizedTest
     @MethodSource("generateData4SaveAdminSecurityTests")
     void endpoints4Save_SecuredManager(MockHttpServletRequestBuilder method, Object object) throws Exception {
@@ -66,7 +72,7 @@ public class ControllersSecurityTests {
     }
 
 
-    @WithMockUser(username = "admin", roles = {"MANAGER"})
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     @ParameterizedTest
     @MethodSource("generateData4DeleteAdminSecurityTests")
     void endpoints4Delete_SecuredManager(MockHttpServletRequestBuilder method) throws Exception {
@@ -81,6 +87,50 @@ public class ControllersSecurityTests {
     void endpointsAreSecuredUser(String path, HttpMethod httpMethod) throws Exception {
         mvc.perform(request(httpMethod, path).with(csrf()))
                 .andExpect(status().isForbidden());
+    }
+
+    @WithAnonymousUser
+    @Test
+    void bookList_errorOnBadUser() throws Exception {
+        List<Book> books = List.of(createBook(11L), createBook(12L));
+        when(bookService.getAll()).thenReturn(books);
+
+        mvc.perform(get("/api/book"))
+                .andExpect(status().is3xxRedirection());
+
+    }
+
+    @WithAnonymousUser
+    @Test
+    void getBookById_errorOnBadUser() throws Exception {
+        Book book = createBook(11L);
+        when(bookService.getBookById(11L)).thenReturn(book);
+
+        mvc.perform(get("/api/book/11").contentType(APPLICATION_JSON))
+                .andExpect(status().is3xxRedirection());
+
+    }
+
+    @WithAnonymousUser
+    @Test
+    void saveBook_errorOnBadUser() throws Exception {
+        Book book = createBook(1L);
+        when(bookService.saveBook(any())).thenReturn(book);
+        mvc.perform(post("/api/book").with(csrf())
+                        .contentType(APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(book)))
+                .andExpect(status().is3xxRedirection());
+
+    }
+
+    @WithAnonymousUser
+    @Test
+    void deleteBook_errorOnBadUser() throws Exception {
+        Book book = new Book();
+        doNothing().when(bookService).deleteBook(anyLong());
+        mvc.perform(delete("/api/book/1", book).with(csrf()))
+                .andExpect(status().is3xxRedirection());
+
     }
 
 

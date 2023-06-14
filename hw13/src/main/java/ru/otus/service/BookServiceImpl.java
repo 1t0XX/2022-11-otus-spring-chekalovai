@@ -1,6 +1,11 @@
 package ru.otus.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.acls.domain.BasePermission;
+import org.springframework.security.acls.domain.GrantedAuthoritySid;
+import org.springframework.security.acls.domain.ObjectIdentityImpl;
+import org.springframework.security.acls.model.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.model.Book;
@@ -14,7 +19,9 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final MutableAclService aclService;
 
+    @PostFilter("hasPermission(filterObject, 'READ')")
     @Transactional(readOnly = true)
     @Override
     public List<Book> getAll() {
@@ -35,7 +42,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book saveBook(Book book) {
         try {
-            return bookRepository.save(book);
+            Book resultBook = bookRepository.save(book);
+            defaultCreatePermissionForAdult(resultBook);
+            return resultBook;
         } catch (Exception e) {
             throw new SaveBookException(book, e);
         }
@@ -59,5 +68,19 @@ public class BookServiceImpl implements BookService {
         } catch (Exception e) {
             throw new GetBookByAuthorException(id, e);
         }
+    }
+
+    private void defaultCreatePermissionForAdult(Book book) {
+        final Sid sid = new GrantedAuthoritySid("ROLE_ADULT");
+        ObjectIdentity oi = new ObjectIdentityImpl(book.getClass(), book.getId());
+        MutableAcl acl;
+        try {
+            acl = (MutableAcl) aclService.readAclById(oi);
+        } catch (Exception e) {
+            acl = aclService.createAcl(oi);
+        }
+        Permission permission = BasePermission.READ;
+        acl.insertAce(acl.getEntries().size(), permission, sid, true);
+        aclService.updateAcl(acl);
     }
 }
