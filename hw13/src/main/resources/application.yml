@@ -4,7 +4,7 @@ spring:
       filter:
         enabled: true
   datasource:
-    url: jdbc:h2:mem:library;
+    url: jdbc:h2:mem:library;MODE=LEGACY
     driverClassName: org.h2.Driver
     username: admin
     password: qwerty

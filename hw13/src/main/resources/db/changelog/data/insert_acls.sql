@@ -2,8 +2,8 @@ INSERT INTO acl_sid (principal, sid) VALUES
 (0, 'ROLE_CHILD'),
 (0, 'ROLE_ADULT');
 
-INSERT INTO acl_class (class) VALUES
-('ru.otus.model.Book');
+INSERT INTO acl_class (id, class) VALUES
+(1, 'ru.otus.model.Book');
 
 INSERT INTO acl_object_identity (object_id_class, object_id_identity, parent_object, owner_sid, entries_inheriting) VALUES
 

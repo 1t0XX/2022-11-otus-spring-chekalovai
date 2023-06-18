@@ -12,6 +12,7 @@ import ru.otus.model.Book;
 import ru.otus.exception.*;
 import ru.otus.repository.BookRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,9 +27,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAll() {
         try {
+            bookRepository.findAll().forEach(this::defaultCreatePermissionForAdult);
             return bookRepository.findAll();
         } catch (Exception e) {
-            throw new FindAllBookException(e);
+            return Collections.emptyList();
+            /*throw new FindAllBookException(e);*/
         }
     }
 
