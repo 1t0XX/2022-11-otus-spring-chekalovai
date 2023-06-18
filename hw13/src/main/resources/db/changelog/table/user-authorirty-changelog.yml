@@ -4,7 +4,7 @@ databaseChangeLog:
       author:  chekalovai
       changes:
       -  createTable:
-          tableName:  t_user_role
+          tableName:  t_user_authorirty
           columns:
           -  column:
               name:  role_id
@@ -15,7 +15,7 @@ databaseChangeLog:
 
       -  addForeignKeyConstraint:
                 baseColumnNames:  role_id
-                baseTableName:  t_user_role
+                baseTableName:  t_user_authorirty
                 constraintName:  fk_user_role_id
                 onUpdate:  CASCADE
                 onDelete: CASCADE
@@ -24,7 +24,7 @@ databaseChangeLog:
 
       -  addForeignKeyConstraint:
                 baseColumnNames:  user_id
-                baseTableName:  t_user_role
+                baseTableName:  t_user_authorirty
                 constraintName:  fk_user_id
                 onUpdate:  CASCADE
                 onDelete: CASCADE

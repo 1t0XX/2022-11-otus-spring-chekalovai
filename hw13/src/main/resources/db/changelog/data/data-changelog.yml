@@ -54,4 +54,4 @@ databaseChangeLog:
         - sqlFile:
             endDelimiter: ;
             splitStatements: true
-            path: classpath:/db/changelog/data/insert_users_roles.sql
+            path: classpath:/db/changelog/data/insert_user_authorirty.sql
