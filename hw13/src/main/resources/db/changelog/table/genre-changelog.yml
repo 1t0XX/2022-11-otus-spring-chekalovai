@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id:  "2023-03-21--0001--chekalovai"
+      author:  chekalovai
+      changes:
+      -  createTable:
+          tableName:  t_genre
+          columns:
+          -  column:
+              name:  id
+              type:  BIGINT
+              autoIncrement: true
+              constraints:
+                 primaryKey: true
+          -  column:
+              name:  name
+              type:  varchar(255)
+              constraints:
+                nullable: false
+                unique: true
