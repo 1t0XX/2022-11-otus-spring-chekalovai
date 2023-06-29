@@ -1,0 +1,57 @@
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+    url: jdbc:h2:mem:library;MODE=LEGACY
+    driverClassName: org.h2.Driver
+    username: admin
+    password: qwerty
+  h2:
+    console:
+      path: /h2
+      settings:
+          web-allow-others: true
+  liquibase:
+    enabled: true
+    change-log: "classpath:/db/changelog/changelog-master.yml"
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+#    properties:
+#      hibernate:
+#        format_sql: true
+  jmx:
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: "logs/application.log"
+  pattern:
+    file: "%date %level [%thread] [%file:%line] %msg%n"
+
+management:
+  server:
+    port: 8080
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "metrics,health,logfile,prometheus"
+  endpoint:
+    metrics:
+      enabled: true
+    health:
+      enabled: true
+      show-components: always
+      show-details: when-authorized
+      roles: "ADMIN"
+    logfile:
+      enabled: true
+    prometheus:
+      enabled: true

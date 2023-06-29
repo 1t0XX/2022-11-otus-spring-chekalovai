@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test-library
+  liquibase:
+    contexts: test
+    change-log: "classpath:/db/changelog/changelog-master-test.yml"
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true

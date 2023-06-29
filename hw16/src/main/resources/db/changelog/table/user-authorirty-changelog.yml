@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id:  "2023-06-12--0001--chekalovai"
+      author:  chekalovai
+      changes:
+      -  createTable:
+          tableName:  t_user_authorirty
+          columns:
+          -  column:
+              name:  role_id
+              type:  BIGINT
+          -  column:
+              name:  user_id
+              type:  BIGINT
+
+      -  addForeignKeyConstraint:
+                baseColumnNames:  role_id
+                baseTableName:  t_user_authorirty
+                constraintName:  fk_user_role_id
+                onUpdate:  CASCADE
+                onDelete: CASCADE
+                referencedColumnNames:  id
+                referencedTableName:  t_role
+
+      -  addForeignKeyConstraint:
+                baseColumnNames:  user_id
+                baseTableName:  t_user_authorirty
+                constraintName:  fk_user_id
+                onUpdate:  CASCADE
+                onDelete: CASCADE
+                referencedColumnNames:  id
+                referencedTableName:  t_user
