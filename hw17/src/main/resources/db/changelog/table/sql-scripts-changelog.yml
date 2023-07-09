@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: "data: insert_acl_tables-01"
+      author: chekalovai
+      changes:
+        - sqlFile:
+            endDelimiter: ;
+            splitStatements: true
+            path: classpath:/db/changelog/table/sql/create_acl_tables.sql
