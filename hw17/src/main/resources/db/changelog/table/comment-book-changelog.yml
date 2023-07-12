@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id:  "2023-03-21--0001--chekalovai"
+      author:  chekalovai
+      changes:
+      -  createTable:
+          tableName:  t_comment_book
+          columns:
+          -  column:
+              name:  id
+              type:  BIGINT
+              autoIncrement: true
+              constraints:
+                 primaryKey: true
+          -  column:
+              name:  comment
+              type:  varchar(255)
+              constraints:
+                nullable: false
+          -  column:
+              name:  book_id
+              type:  BIGINT
+              constraints:
+                nullable: false
+
+      -  addForeignKeyConstraint:
+                baseColumnNames:  book_id
+                baseTableName:  t_comment_book
+                constraintName:  fk_comment_book_id
+                onDelete:  CASCADE
+                onUpdate:  CASCADE
+                referencedColumnNames:  id
+                referencedTableName:  t_book
+
+      - createIndex:
+                columns:
+                 - column:
+                    name:  book_id
+                indexName: id_comment_book_id
+                tableName: t_comment_book
