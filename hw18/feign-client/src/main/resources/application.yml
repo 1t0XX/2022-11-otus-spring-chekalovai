@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: feign-client
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    root: ERROR
+
+diff-postfix: "_from library service"
+
+hystrix:
+  command:
+    commonBookListKey:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
