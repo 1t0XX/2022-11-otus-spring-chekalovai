@@ -7,7 +7,7 @@ import ru.otus.dto.Book;
 import java.util.List;
 
 @FeignClient(name = "library-service")
-public interface LibraryServiceFeignClient {
+public interface LibraryServiceClient {
 
     @GetMapping(path = "/api/book")
     List<Book> bookList();

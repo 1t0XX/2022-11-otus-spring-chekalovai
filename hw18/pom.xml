@@ -18,7 +18,7 @@
 
     <modules>
        <module>library-service</module>
-        <module>feign-client</module>
+        <module>library-client</module>
         <module>discovery-server</module>
         <module>hystrix-dashboard</module>
     </modules>

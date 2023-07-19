@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.otus.dto.Book;
 import ru.otus.dto.ErrorBookDto;
-import ru.otus.feign.LibraryServiceFeignClient;
+import ru.otus.feign.LibraryServiceClient;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 @Service
 public class BookServiceImpl implements BookService {
 
-    private final LibraryServiceFeignClient feignClient;
+    private final LibraryServiceClient feignClient;
     private final String diffPostfix;
 
-    public BookServiceImpl(LibraryServiceFeignClient feignClient, @Value("${diff-postfix}") String diffPostfix) {
+    public BookServiceImpl(LibraryServiceClient feignClient, @Value("${diff-postfix}") String diffPostfix) {
         this.feignClient = feignClient;
         this.diffPostfix = diffPostfix;
     }

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.otus</groupId>
-    <artifactId>feign-client</artifactId>
+    <artifactId>library-client</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 

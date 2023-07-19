@@ -10,10 +10,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
-public class FeignClientApplication {
+public class ClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FeignClientApplication.class, args);
+        SpringApplication.run(ClientApplication.class, args);
     }
 
 }
