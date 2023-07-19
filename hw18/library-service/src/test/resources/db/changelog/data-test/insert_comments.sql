@@ -1,0 +1,9 @@
+insert into t_comment_book(book_id, comment) values (1,'Читал');
+insert into t_comment_book(book_id, comment) values (1,'Понравилось');
+insert into t_comment_book(book_id, comment) values (2,'Читал');
+insert into t_comment_book(book_id, comment) values (2,'Прикольно');
+insert into t_comment_book(book_id, comment) values (3,'Читал');
+insert into t_comment_book(book_id, comment) values (3,'Интересно');
+insert into t_comment_book(book_id, comment) values (4,'Читал');
+insert into t_comment_book(book_id, comment) values (4,'Хорошо');
+insert into t_comment_book(book_id, comment) values (4,'Интересно');
